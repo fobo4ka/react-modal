@@ -185,12 +185,12 @@ export default class ModalPortal extends Component {
   focusContent = () =>
     this.content && !this.contentHasFocus() && this.content.focus();
 
-  closeWithTimeout = () => {
+  closeWithTimeout = (newTimeout) => {
     const closesAt = Date.now() + this.props.closeTimeoutMS;
     this.setState({ beforeClose: true, closesAt }, () => {
       this.closeTimer = setTimeout(
         this.closeWithoutTimeout,
-        this.state.closesAt - Date.now()
+        newTimeout ? newTimeout : this.state.closesAt - Date.now()
       );
     });
   };

@@ -59,7 +59,8 @@ export default class Modal extends Component {
     aria: PropTypes.object,
     role: PropTypes.string,
     contentLabel: PropTypes.string,
-    shouldCloseOnEsc: PropTypes.bool
+    shouldCloseOnEsc: PropTypes.bool,
+    beforeCloseFunc: PropTypes.func
   };
   /* eslint-enable react/no-unused-prop-types */
 
@@ -146,6 +147,7 @@ export default class Modal extends Component {
 
     const state = this.portal.state;
     const now = Date.now();
+    let newTimeout = null;
     const closesAt =
       state.isOpen &&
       this.props.closeTimeoutMS &&
@@ -153,12 +155,13 @@ export default class Modal extends Component {
 
     if (closesAt) {
       if (!state.beforeClose) {
-        this.portal.closeWithTimeout();
+        newTimeout = this.props.beforeCloseFunc && this.props.beforeCloseFunc();
+        this.portal.closeWithTimeout(newTimeout);
       }
-
-      setTimeout(this.removePortal, closesAt - now);
+      setTimeout(this.removePortal, newTimeout ? newTimeout : closesAt - now);
     } else {
-      this.removePortal();
+      this.props.beforeCloseFunc && this.props.beforeCloseFunc();
+      !this.props.beforeCloseFunc && this.removePortal();
     }
   }
 

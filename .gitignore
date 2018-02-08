@@ -1,6 +1,7 @@
 .version
 .branch
 .changelog_update
+.DS_Store
 scripts/__pycache__/
 examples/**/*-bundle.js
 node_modules/
