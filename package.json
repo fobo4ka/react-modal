@@ -2,7 +2,7 @@
   "name": "react-modal",
   "version": "3.1.12",
   "description": "Accessible modal dialog component for React.JS",
-  "main": "./lib/index.js",
+  "main": "./dist/react-modal.min.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/reactjs/react-modal.git"
@@ -15,7 +15,8 @@
   "scripts": {
     "start": "./node_modules/.bin/webpack-dev-server --inline --host 127.0.0.1 --content-base examples/",
     "test": "cross-env NODE_ENV=test karma start",
-    "lint": "eslint src/ specs/"
+    "lint": "eslint src/ specs/",
+    "build": "./node_modules/.bin/webpack --config webpack.dist.config.js"
   },
   "authors": [
     "Ryan Florence"
